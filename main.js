@@ -26,6 +26,8 @@ const characters = {
     },
   };
 
+  let arenas = document.querySelector(".arenas");
+
   function createPlayer(className, playerObject) {
     let player = document.createElement("div");
     player.classList.add(className);
@@ -47,7 +49,6 @@ const characters = {
     let img = document.createElement("img");
     img.src = playerObject.img;
 
-    let arenas = document.querySelector(".arenas");
     arenas.appendChild(player);
 
     player.appendChild(progressbar);
