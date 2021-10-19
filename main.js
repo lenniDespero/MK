@@ -8,22 +8,24 @@ const characters = {
 
   const player1 = {
     name: "Scorpion",
-    hp: 85,
+    hp: 100,
     img: characters.scorpion,
     weapon: ["Arms", "Legs"],
     attack: function () {
       console.log(this.name + " Fight...");
     },
+    player: 1,
   };
   
   const player2 = {
     name: "Subzero",
-    hp: 90,
+    hp: 100,
     img: characters.subzero,
     weapon: ["Arms", "Legs"],
     attack: function () {
       console.log(this.name + " Fight...");
     },
+    player: 2,
   };
 
   let arenas = document.querySelector(".arenas");
@@ -57,7 +59,38 @@ const characters = {
     progressbar.appendChild(playerName);
     character.appendChild(img);
   }
+
+  function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min) ) + min;
+  }
+
+
+  let loseTitle = document.querySelector('.loseTitle')
+
+  function changeHP(player) {
+    let points = getRndInteger(1,20);
+    if (player.hp <= points) {
+      player.hp = 0;
+      randomButton.disabled = true;
+      otherPlayer = "player" + (player.player == 1 ? 2 : 1);
+      loseTitle.textContent = document.querySelector('.' + otherPlayer).querySelector('.name').textContent + " WIN";
+    } else {
+      player.hp -= points;
+    }
+    let div = document.querySelector('.player'+player.player);
+    let life = div.querySelector('.life')
+    life.style.width = player.hp + "%"
+  }
+
+  function playRound() {
+    changeHP(player1);
+    changeHP(player2);
+  }
+
+  let randomButton = document.querySelector('.button');
+  randomButton.addEventListener('click', playRound);
   
+
   createPlayer("player1", player1);
   createPlayer("player2", player2);
   player1.attack();
